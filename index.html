@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>عالم واحد - عالم الأطفال</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&family=Readex+Pro:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--sky:#0ea5e9;--deep:#0369a1;--sun:#fbbf24;--pink:#f472b6;--orange:#fb923c;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Readex Pro',sans-serif;background:linear-gradient(180deg,#87ceeb 0%,#b8e4f7 40%,#d4f5d4 100%);min-height:100vh;overflow-x:hidden;direction:rtl;}
+
+    /* CLOUDS */
+    .clouds{position:fixed;top:0;left:0;width:100%;pointer-events:none;z-index:0;}
+    .cloud{position:absolute;background:white;border-radius:50px;opacity:.75;animation:driftCloud linear infinite;}
+    .cloud::before,.cloud::after{content:'';position:absolute;background:white;border-radius:50%;}
+    .c1{width:130px;height:44px;top:7%;left:-160px;animation-duration:28s;}
+    .c1::before{width:65px;height:65px;top:-33px;left:20px;}.c1::after{width:44px;height:44px;top:-22px;left:65px;}
+    .c2{width:90px;height:32px;top:18%;left:-120px;animation-duration:42s;animation-delay:10s;}
+    .c2::before{width:48px;height:48px;top:-24px;left:12px;}.c2::after{width:32px;height:32px;top:-16px;left:44px;}
+    .c3{width:170px;height:55px;top:4%;left:-220px;animation-duration:52s;animation-delay:18s;opacity:.5;}
+    .c3::before{width:85px;height:85px;top:-42px;left:28px;}.c3::after{width:58px;height:58px;top:-30px;left:80px;}
+    @keyframes driftCloud{from{left:-220px}to{left:110%}}
+
+    /* FLOATERS */
+    .floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+    .fl{position:absolute;font-size:1.8rem;animation:floatUp linear infinite;opacity:.3;}
+    .fl:nth-child(1){left:8%;animation-duration:7s;font-size:2rem;}
+    .fl:nth-child(2){left:22%;animation-duration:9s;animation-delay:2s;}
+    .fl:nth-child(3){left:38%;animation-duration:6s;animation-delay:4s;font-size:2.2rem;}
+    .fl:nth-child(4){left:57%;animation-duration:8s;animation-delay:1s;}
+    .fl:nth-child(5){left:72%;animation-duration:10s;animation-delay:3s;font-size:1.5rem;}
+    .fl:nth-child(6){left:88%;animation-duration:7s;animation-delay:5s;font-size:2rem;}
+    @keyframes floatUp{0%{transform:translateY(100vh) rotate(0);opacity:0;}10%{opacity:.3;}90%{opacity:.3;}100%{transform:translateY(-120px) rotate(360deg);opacity:0;}}
+
+    /* MUSIC BTN */
+    .music-btn{
+      position:fixed;bottom:28px;left:28px;z-index:100;
+      width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;
+      background:linear-gradient(135deg,#a78bfa,#7c3aed);
+      color:white;font-size:1.6rem;
+      box-shadow:0 6px 20px rgba(124,58,237,.4);
+      transition:transform .2s,box-shadow .2s;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .music-btn:hover{transform:scale(1.1);}
+    .music-btn.playing{animation:musicPulse 1.5s ease-in-out infinite;}
+    @keyframes musicPulse{0%,100%{box-shadow:0 6px 20px rgba(124,58,237,.4);}50%{box-shadow:0 6px 36px rgba(124,58,237,.7),0 0 0 12px rgba(124,58,237,.15);}}
+
+    /* MASCOT */
+    .mascot{
+      position:fixed;bottom:0;right:20px;z-index:99;
+      width:120px;cursor:pointer;
+      animation:mascotFloat 3s ease-in-out infinite;
+      filter:drop-shadow(0 8px 16px rgba(0,0,0,.15));
+    }
+    @keyframes mascotFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+    .mascot-bubble{
+      position:fixed;bottom:135px;right:28px;z-index:99;
+      background:white;border-radius:20px 20px 4px 20px;
+      padding:12px 18px;font-family:'Baloo 2',cursive;font-weight:700;
+      font-size:.9rem;color:var(--deep);max-width:180px;text-align:center;
+      box-shadow:0 4px 20px rgba(0,0,0,.12);border:2px solid #e0f2fe;
+      animation:bubblePop .4s cubic-bezier(.34,1.56,.64,1);
+      display:none;
+    }
+    .mascot-bubble.show{display:block;}
+    @keyframes bubblePop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+
+    /* HEADER */
+    header{position:relative;z-index:10;text-align:center;padding:44px 20px 18px;}
+    .logo{width:130px;height:130px;border-radius:50%;background:linear-gradient(135deg,#fbbf24,#f97316,#ec4899);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:3.8rem;box-shadow:0 8px 32px rgba(249,115,22,.4),0 0 0 10px rgba(249,115,22,.12);animation:glowPulse 3s ease-in-out infinite;}
+    @keyframes glowPulse{0%,100%{box-shadow:0 8px 32px rgba(249,115,22,.4),0 0 0 10px rgba(249,115,22,.12);}50%{box-shadow:0 8px 48px rgba(236,72,153,.5),0 0 0 16px rgba(236,72,153,.15);}}
+    h1.title{font-family:'Baloo 2',cursive;font-size:clamp(2.8rem,8vw,5.5rem);font-weight:800;background:linear-gradient(135deg,#f97316,#ec4899,#8b5cf6,#0ea5e9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;}
+    .sub{font-size:1.1rem;color:var(--deep);font-weight:600;margin-top:8px;}
+    .rainbow{height:8px;background:linear-gradient(90deg,#f87171,#fb923c,#fbbf24,#4ade80,#60a5fa,#a78bfa,#f472b6);border-radius:4px;margin:22px auto;max-width:640px;}
+
+    /* COUNTER STRIP */
+    .counter-strip{
+      position:relative;z-index:5;
+      display:flex;flex-wrap:wrap;justify-content:center;gap:16px;
+      max-width:800px;margin:0 auto 32px;padding:0 20px;
+    }
+    .counter-card{
+      background:rgba(255,255,255,.85);backdrop-filter:blur(10px);
+      border-radius:20px;padding:18px 28px;text-align:center;
+      box-shadow:0 6px 22px rgba(0,0,0,.09);border:2px solid rgba(255,255,255,.95);
+      min-width:140px;
+    }
+    .counter-num{font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;}
+    .counter-lbl{font-size:.8rem;color:#64748b;font-weight:600;margin-top:2px;}
+    .cn1{color:#f97316}.cn2{color:#0ea5e9}.cn3{color:#a78bfa}.cn4{color:#22c55e}
+
+    /* NAV */
+    nav{position:relative;z-index:10;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;padding:0 20px 32px;}
+    nav a{text-decoration:none;font-family:'Baloo 2',cursive;font-weight:700;font-size:1rem;padding:11px 24px;border-radius:50px;color:white;transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s;box-shadow:0 4px 14px rgba(0,0,0,.14);}
+    nav a:hover{transform:translateY(-4px) scale(1.06);}
+    .n1{background:linear-gradient(135deg,#f87171,#fb923c);}
+    .n2{background:linear-gradient(135deg,#fbbf24,#84cc16);}
+    .n3{background:linear-gradient(135deg,#60a5fa,#818cf8);}
+    .n4{background:linear-gradient(135deg,#f472b6,#a78bfa);}
+    .n5{background:linear-gradient(135deg,#2dd4bf,#0ea5e9);}
+    .n6{background:linear-gradient(135deg,#fb923c,#f59e0b);}
+
+    /* HERO */
+    .hero{position:relative;z-index:5;text-align:center;padding:10px 20px 50px;}
+    .hero-box{background:rgba(255,255,255,.82);backdrop-filter:blur(12px);border-radius:32px;padding:32px 44px;max-width:720px;margin:0 auto;box-shadow:0 8px 40px rgba(14,165,233,.14);border:2px solid rgba(255,255,255,.95);}
+    .hero-box h2{font-family:'Baloo 2',cursive;font-size:clamp(1.4rem,4vw,2rem);color:var(--deep);font-weight:800;margin-bottom:12px;}
+    .hero-box p{font-size:1rem;color:#475569;line-height:1.9;}
+
+    /* WRAP */
+    .wrap{position:relative;z-index:5;max-width:1100px;margin:0 auto;padding:20px 20px 60px;}
+    .sec{margin-bottom:64px;}
+    .sec-head{display:flex;align-items:center;gap:14px;margin-bottom:26px;}
+    .sec-ico{width:62px;height:62px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:2rem;flex-shrink:0;animation:wiggle 3.5s ease-in-out infinite;}
+    @keyframes wiggle{0%,100%{transform:rotate(0)}25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+    .sec-ttl{font-family:'Baloo 2',cursive;font-size:clamp(1.4rem,4vw,2rem);font-weight:800;}
+
+    /* GRID */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px;}
+    .card{border-radius:24px;padding:26px 20px;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.95);box-shadow:0 6px 24px rgba(0,0,0,.08);transition:transform .26s cubic-bezier(.34,1.56,.64,1),box-shadow .26s;cursor:pointer;text-align:center;}
+    .card:hover{transform:translateY(-10px) scale(1.02);box-shadow:0 18px 44px rgba(0,0,0,.12);}
+    .cem{font-size:3.2rem;margin-bottom:12px;display:block;animation:cardB 2s ease-in-out infinite;}
+    .card:nth-child(2) .cem{animation-delay:.25s}.card:nth-child(3) .cem{animation-delay:.5s}.card:nth-child(4) .cem{animation-delay:.75s}
+    @keyframes cardB{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+    .card h3{font-family:'Baloo 2',cursive;font-weight:700;font-size:1.15rem;margin-bottom:6px;color:#1e293b;}
+    .card p{font-size:.85rem;color:#64748b;line-height:1.65;}
+    .ct{border-top:6px solid}
+    .cr{border-top-color:#f87171}.co{border-top-color:#fb923c}.cy{border-top-color:#fbbf24}
+    .cg{border-top-color:#4ade80}.cb{border-top-color:#60a5fa}.cp{border-top-color:#a78bfa}
+    .cpk{border-top-color:#f472b6}.cteal{border-top-color:#2dd4bf}
+
+    /* YOUTUBE */
+    .yt-wrap{position:relative;z-index:5;max-width:860px;margin:0 auto 64px;padding:0 20px;}
+    .yt-box{background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border-radius:28px;padding:28px;box-shadow:0 8px 36px rgba(0,0,0,.1);border:2px solid rgba(255,255,255,.95);}
+    .yt-ch{display:flex;align-items:center;gap:20px;padding:22px;border-radius:20px;background:linear-gradient(135deg,#ff0000,#cc0000);color:white;text-decoration:none;margin-bottom:20px;transition:transform .22s,box-shadow .22s;box-shadow:0 6px 22px rgba(255,0,0,.28);}
+    .yt-ch:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(255,0,0,.38);}
+    .yt-ch .yi{font-size:3.2rem;}
+    .yt-ch h3{font-family:'Baloo 2',cursive;font-size:1.45rem;font-weight:800;}
+    .yt-ch p{font-size:.85rem;opacity:.9;margin-top:4px;}
+    .yt-btn{display:inline-block;background:white;color:#cc0000;font-family:'Baloo 2',cursive;font-weight:700;font-size:.95rem;padding:10px 24px;border-radius:50px;text-decoration:none;margin-top:12px;transition:transform .2s;box-shadow:0 4px 12px rgba(0,0,0,.1);}
+    .yt-btn:hover{transform:scale(1.06);}
+    .yt-rt{font-family:'Baloo 2',cursive;font-weight:700;font-size:1.1rem;color:#1e293b;margin-bottom:14px;}
+    .yt-vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
+    .yt-vc{border-radius:16px;overflow:hidden;background:#0f172a;transition:transform .22s;cursor:pointer;text-decoration:none;}
+    .yt-vc:hover{transform:scale(1.03);}
+    .yt-th{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#1e293b,#334155);display:flex;align-items:center;justify-content:center;font-size:2.5rem;position:relative;}
+    .pb{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2.8rem;background:rgba(255,0,0,0);transition:background .2s;}
+    .yt-vc:hover .pb{background:rgba(255,0,0,.3);}
+    .yt-vi{padding:10px 12px;}
+    .yt-vi p{font-family:'Baloo 2',cursive;font-size:.9rem;color:white;font-weight:600;}
+
+    /* QURAN */
+    .quran{background:linear-gradient(135deg,#0f4c75,#1b6ca8,#1e88e5);border-radius:32px;padding:44px 40px;text-align:center;color:white;box-shadow:0 10px 44px rgba(15,76,117,.3);border:3px solid rgba(255,215,0,.25);}
+    .quran h2{font-family:'Baloo 2',cursive;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;color:var(--sun);margin-bottom:12px;}
+    .quran p{font-size:1rem;opacity:.9;margin-bottom:28px;line-height:1.9;}
+    .surah-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;}
+    .surah{background:rgba(255,215,0,.18);border:2px solid rgba(255,215,0,.45);color:var(--sun);font-family:'Baloo 2',cursive;font-weight:700;padding:10px 20px;border-radius:50px;font-size:.95rem;transition:background .2s,transform .2s;cursor:pointer;}
+    .surah:hover{background:rgba(255,215,0,.3);transform:scale(1.06);}
+
+    /* SOCIAL */
+    .social{position:relative;z-index:5;text-align:center;padding:10px 20px 70px;}
+    .social h2{font-family:'Baloo 2',cursive;font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;color:var(--deep);margin-bottom:32px;}
+    .s-row{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;max-width:780px;margin:0 auto;}
+    .sc{display:flex;flex-direction:column;align-items:center;gap:12px;padding:26px 32px;border-radius:28px;color:white;text-decoration:none;font-family:'Baloo 2',cursive;font-weight:700;font-size:1.05rem;min-width:140px;transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .22s;box-shadow:0 6px 22px rgba(0,0,0,.14);}
+    .sc:hover{transform:translateY(-10px) scale(1.06);}
+    .sc .si{font-size:3rem;}
+    .s-yt{background:linear-gradient(135deg,#ff0000,#b91c1c);}
+    .s-fb{background:linear-gradient(135deg,#1877f2,#0952a5);}
+    .s-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);}
+    .s-tt{background:linear-gradient(135deg,#2d2d2d,#000);}
+
+    /* CONTACT */
+    .contact-sec{position:relative;z-index:5;max-width:700px;margin:0 auto 70px;padding:0 20px;}
+    .contact-box{background:rgba(255,255,255,.88);backdrop-filter:blur(12px);border-radius:32px;padding:40px;box-shadow:0 8px 40px rgba(0,0,0,.1);border:2px solid rgba(255,255,255,.95);}
+    .contact-box h2{font-family:'Baloo 2',cursive;font-size:clamp(1.4rem,4vw,2rem);font-weight:800;color:var(--deep);margin-bottom:6px;text-align:center;}
+    .contact-box .sub2{font-size:.9rem;color:#64748b;text-align:center;margin-bottom:28px;}
+    .form-group{margin-bottom:18px;}
+    .form-group label{display:block;font-weight:600;font-size:.9rem;color:#334155;margin-bottom:6px;}
+    .form-group input,.form-group textarea,.form-group select{
+      width:100%;padding:13px 16px;border-radius:14px;border:2px solid #e2e8f0;
+      font-family:'Readex Pro',sans-serif;font-size:.95rem;color:#1e293b;
+      background:white;transition:border-color .2s,box-shadow .2s;outline:none;direction:rtl;
+    }
+    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:#60a5fa;box-shadow:0 0 0 4px rgba(96,165,250,.15);}
+    .form-group textarea{min-height:110px;resize:vertical;}
+    .send-btn{
+      width:100%;padding:15px;border:none;border-radius:16px;cursor:pointer;
+      background:linear-gradient(135deg,#0ea5e9,#6366f1);
+      font-family:'Baloo 2',cursive;font-weight:700;font-size:1.1rem;color:white;
+      transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s;
+      box-shadow:0 6px 20px rgba(14,165,233,.35);
+    }
+    .send-btn:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 10px 28px rgba(14,165,233,.45);}
+    .success-msg{display:none;text-align:center;padding:20px;background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:16px;margin-top:18px;font-family:'Baloo 2',cursive;font-weight:700;color:#065f46;font-size:1.1rem;}
+
+    /* FOOTER */
+    footer{position:relative;z-index:5;background:linear-gradient(135deg,#0f172a,#1e293b);padding:40px 20px 100px;text-align:center;color:white;}
+    .fl-logo{font-family:'Baloo 2',cursive;font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--sun),var(--orange),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;}
+    .fl-links{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:16px 0;}
+    .fl-links a{color:#94a3b8;text-decoration:none;font-size:.85rem;transition:color .2s;}
+    .fl-links a:hover{color:var(--sun);}
+    .fl-copy{font-size:.8rem;color:#475569;margin-top:12px;}
+
+    /* ANIMATE */
+    .fu{opacity:0;transform:translateY(28px);animation:fadeUp .65s ease forwards;}
+    @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+    .d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}
+    .d4{animation-delay:.4s}.d5{animation-delay:.5s}.d6{animation-delay:.6s}
+
+    @media(max-width:600px){
+      .grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));}
+      .quran{padding:26px 18px;}.hero-box{padding:24px 20px;}
+      .sc{padding:20px 24px;min-width:110px;}
+      .contact-box{padding:24px 18px;}
+      .mascot{width:90px;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- CLOUDS -->
+<div class="clouds">
+  <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+</div>
+
+<!-- FLOATERS -->
+<div class="floaters">
+  <span class="fl">⭐</span><span class="fl">🌟</span><span class="fl">🎈</span>
+  <span class="fl">🦋</span><span class="fl">🌺</span><span class="fl">✨</span>
+</div>
+
+<!-- MUSIC BUTTON -->
+<button class="music-btn" id="musicBtn" title="موسيقى هادئة">🎵</button>
+
+<!-- MASCOT -->
+<div class="mascot-bubble" id="mascotBubble">أهلاً! 👋<br>مرحباً بك في عالمنا المبهج! 🌈</div>
+<div class="mascot" id="mascot" onclick="toggleBubble()">
+  <svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+    <!-- Body -->
+    <ellipse cx="60" cy="95" rx="38" ry="40" fill="#fbbf24"/>
+    <!-- Belly -->
+    <ellipse cx="60" cy="100" rx="24" ry="26" fill="#fde68a"/>
+    <!-- Head -->
+    <circle cx="60" cy="52" r="36" fill="#fbbf24"/>
+    <!-- Ears -->
+    <ellipse cx="24" cy="34" rx="10" ry="14" fill="#f97316"/>
+    <ellipse cx="24" cy="34" rx="6" ry="9" fill="#fde68a"/>
+    <ellipse cx="96" cy="34" rx="10" ry="14" fill="#f97316"/>
+    <ellipse cx="96" cy="34" rx="6" ry="9" fill="#fde68a"/>
+    <!-- Eyes -->
+    <circle cx="46" cy="48" r="8" fill="white"/>
+    <circle cx="74" cy="48" r="8" fill="white"/>
+    <circle cx="48" cy="49" r="4" fill="#1e293b"/>
+    <circle cx="76" cy="49" r="4" fill="#1e293b"/>
+    <circle cx="49" cy="47" r="1.5" fill="white"/>
+    <circle cx="77" cy="47" r="1.5" fill="white"/>
+    <!-- Smile -->
+    <path d="M46 63 Q60 76 74 63" stroke="#92400e" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <!-- Nose -->
+    <ellipse cx="60" cy="59" rx="5" ry="3.5" fill="#f97316"/>
+    <!-- Star on head -->
+    <text x="52" y="22" font-size="14" text-anchor="middle">⭐</text>
+    <!-- Arms -->
+    <ellipse cx="22" cy="95" rx="10" ry="22" fill="#fbbf24" transform="rotate(-20,22,95)"/>
+    <ellipse cx="98" cy="95" rx="10" ry="22" fill="#fbbf24" transform="rotate(20,98,95)"/>
+    <!-- Legs -->
+    <ellipse cx="44" cy="132" rx="12" ry="10" fill="#f97316"/>
+    <ellipse cx="76" cy="132" rx="12" ry="10" fill="#f97316"/>
+  </svg>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo fu d1">🌍</div>
+  <h1 class="title fu d2">عالم واحد</h1>
+  <p class="sub fu d3">🎶 عالَمُ الأطفالِ المبهج والمُتعلِّم 🎶</p>
+  <div class="rainbow fu d4"></div>
+</header>
+
+<!-- COUNTERS -->
+<div class="counter-strip fu d4">
+  <div class="counter-card">
+    <div class="counter-num cn1" id="cnt1">0</div>
+    <div class="counter-lbl">مشترك يوتيوب</div>
+  </div>
+  <div class="counter-card">
+    <div class="counter-num cn2" id="cnt2">0</div>
+    <div class="counter-lbl">متابع فيسبوك</div>
+  </div>
+  <div class="counter-card">
+    <div class="counter-num cn3" id="cnt3">0</div>
+    <div class="counter-lbl">متابع إنستغرام</div>
+  </div>
+  <div class="counter-card">
+    <div class="counter-num cn4" id="cnt4">0</div>
+    <div class="counter-lbl">متابع تيك توك</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="fu d4">
+  <a href="#nasheeds" class="n1">🎵 أناشيد</a>
+  <a href="#stories"  class="n2">📚 قصص</a>
+  <a href="#games"    class="n3">🎮 ألعاب</a>
+  <a href="#cartoons" class="n4">🎬 رسوم</a>
+  <a href="#quran"    class="n5">🌙 القرآن</a>
+  <a href="#contact"  class="n6">✉️ تواصل</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-box fu d5">
+    <h2>🌟 أهلاً بك في عالمنا المبهج! 🌟</h2>
+    <p>موقع <strong>عالم واحد</strong> للأطفال — حيث يلتقي التعلّم بالمرح!<br>
+    أناشيد جميلة · قصص شيقة · ألعاب تعليمية · رسوم متحركة · تحفيظ القرآن الكريم 🌈</p>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="wrap">
+
+  <!-- أناشيد -->
+  <div class="sec fu d1" id="nasheeds">
+    <div class="sec-head">
+      <div class="sec-ico" style="background:linear-gradient(135deg,#fbbf24,#f97316)">🎵</div>
+      <h2 class="sec-ttl" style="color:#ea580c">أناشيد الأطفال</h2>
+    </div>
+    <div class="grid">
+      <div class="card ct co"><span class="cem">🎤</span><h3>أناشيد إسلامية</h3><p>أجمل الأناشيد الدينية المناسبة لكل طفل مسلم</p></div>
+      <div class="card ct cy"><span class="cem">🎶</span><h3>أناشيد تعليمية</h3><p>تعلّم الحروف والأرقام والألوان بالغناء الممتع</p></div>
+      <div class="card ct cpk"><span class="cem">🌙</span><h3>أناشيد دينية</h3><p>أناشيد تربوية عن الإسلام والقيم الجميلة</p></div>
+      <div class="card ct cr"><span class="cem">🎸</span><h3>أغاني مرحة</h3><p>أغانٍ للتسلية والفرح في أجواء مبهجة</p></div>
+    </div>
+  </div>
+
+  <!-- قصص -->
+  <div class="sec fu d2" id="stories">
+    <div class="sec-head">
+      <div class="sec-ico" style="background:linear-gradient(135deg,#4ade80,#16a34a)">📚</div>
+      <h2 class="sec-ttl" style="color:#15803d">قصص الأطفال</h2>
+    </div>
+    <div class="grid">
+      <div class="card ct cg"><span class="cem">📖</span><h3>قصص الأنبياء</h3><p>قصص رائعة من سيرة الأنبياء الكرام</p></div>
+      <div class="card ct cteal"><span class="cem">🦁</span><h3>قصص الحيوانات</h3><p>حكايات ممتعة من عالم الطبيعة والحيوانات</p></div>
+      <div class="card ct cb"><span class="cem">🚀</span><h3>قصص المغامرات</h3><p>مغامرات شيقة ومثيرة لعقول صغيرة وطموحة</p></div>
+      <div class="card ct cp"><span class="cem">💫</span><h3>قصص قبل النوم</h3><p>قصص هادئة ومريحة تمنح أحلاماً جميلة</p></div>
+    </div>
+  </div>
+
+  <!-- ألعاب -->
+  <div class="sec fu d3" id="games">
+    <div class="sec-head">
+      <div class="sec-ico" style="background:linear-gradient(135deg,#60a5fa,#4f46e5)">🎮</div>
+      <h2 class="sec-ttl" style="color:#4338ca">ألعاب تعليمية</h2>
+    </div>
+    <div class="grid">
+      <div class="card ct cb"><span class="cem">🔤</span><h3>تعلّم الحروف</h3><p>ألعاب تفاعلية لتعلّم الحروف العربية بطريقة ممتعة</p></div>
+      <div class="card ct cp"><span class="cem">🔢</span><h3>الأرقام والحساب</h3><p>جمع وطرح وأشكال وألوان بأسلوب شيق ومسلٍّ</p></div>
+      <div class="card ct cteal"><span class="cem">🎨</span><h3>التلوين الرقمي</h3><p>لوّن رسوماتك المفضلة وأبدع بألوانك الخاصة</p></div>
+      <div class="card ct cg"><span class="cem">🧩</span><h3>ألغاز وبازل</h3><p>تحديات ذكية تنمّي مهارات التفكير والإبداع</p></div>
+    </div>
+  </div>
+
+  <!-- رسوم -->
+  <div class="sec fu d4" id="cartoons">
+    <div class="sec-head">
+      <div class="sec-ico" style="background:linear-gradient(135deg,#f472b6,#db2777)">🎬</div>
+      <h2 class="sec-ttl" style="color:#be185d">رسوم متحركة</h2>
+    </div>
+    <div class="grid">
+      <div class="card ct cpk"><span class="cem">🦄</span><h3>شخصيات مرحة</h3><p>شخصيات كرتونية محبوبة في مغامرات لا تُنسى</p></div>
+      <div class="card ct co"><span class="cem">🌍</span><h3>استكشاف العالم</h3><p>تعرّف على الطبيعة والدول والثقافات بشكل مبسّط</p></div>
+      <div class="card ct cy"><span class="cem">🤖</span><h3>علوم وتكنولوجيا</h3><p>رسوم تعليمية عن العلوم والاختراعات الرائعة</p></div>
+      <div class="card ct cr"><span class="cem">🎭</span><h3>قيم وأخلاق</h3><p>قصص مرسومة تغرس القيم الجميلة والأخلاق الحميدة</p></div>
+    </div>
+  </div>
+
+  <!-- قرآن -->
+  <div class="sec fu d5" id="quran">
+    <div class="quran">
+      <h2>🌙 تحفيظ قِصار السُّوَر 🌙</h2>
+      <p>برنامج ممتع لتحفيظ قِصار سور القرآن الكريم للأطفال<br>بصوت جميل وأسلوب تفاعلي يحبّه الصغار ❤️</p>
+      <div class="surah-grid">
+        <span class="surah">🌸 الفاتحة</span><span class="surah">⭐ الإخلاص</span>
+        <span class="surah">🌙 الفلق</span><span class="surah">✨ الناس</span>
+        <span class="surah">📿 الكوثر</span><span class="surah">🕊️ النصر</span>
+        <span class="surah">🌿 العصر</span><span class="surah">💫 الضحى</span>
+        <span class="surah">🌺 الشرح</span><span class="surah">🌟 الفيل</span>
+        <span class="surah">🎀 قريش</span><span class="surah">🌈 الماعون</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- YOUTUBE -->
+<div class="yt-wrap fu d3">
+  <div class="yt-box">
+    <a href="https://youtube.com/@oneworld-33?feature=shared" target="_blank" class="yt-ch">
+      <span class="yi">▶️</span>
+      <div>
+        <h3>قناة عالم واحد على يوتيوب</h3>
+        <p>اشترك الآن وشاهد أحدث المقاطع والأناشيد</p>
+        <span class="yt-btn">▶ زيارة القناة</span>
+      </div>
+    </a>
+    <p class="yt-rt">🎬 آخر الفيديوهات</p>
+    <div class="yt-vids">
+      <a href="https://youtube.com/@oneworld-33?feature=shared" target="_blank" class="yt-vc">
+        <div class="yt-th">🎵<div class="pb">▶</div></div>
+        <div class="yt-vi"><p>أناشيد الأطفال</p></div>
+      </a>
+      <a href="https://youtube.com/@oneworld-33?feature=shared" target="_blank" class="yt-vc">
+        <div class="yt-th">📖<div class="pb">▶</div></div>
+        <div class="yt-vi"><p>قصص إسلامية</p></div>
+      </a>
+      <a href="https://youtube.com/@oneworld-33?feature=shared" target="_blank" class="yt-vc">
+        <div class="yt-th">🌙<div class="pb">▶</div></div>
+        <div class="yt-vi"><p>تحفيظ القرآن</p></div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- SOCIAL -->
+<div class="social">
+  <h2 class="fu d2">🌐 تابعنا على منصات التواصل الاجتماعي</h2>
+  <div class="s-row fu d3">
+    <a href="https://youtube.com/@oneworld-33?feature=shared" target="_blank" class="sc s-yt"><span class="si">▶️</span>يوتيوب</a>
+    <a href="https://www.facebook.com/mohamed.bekkaoui.165" target="_blank" class="sc s-fb"><span class="si">📘</span>فيسبوك</a>
+    <a href="https://www.instagram.com/mohmmedym" target="_blank" class="sc s-ig"><span class="si">📸</span>إنستغرام</a>
+    <a href="https://www.tiktok.com/@mohammedym4" target="_blank" class="sc s-tt"><span class="si">🎵</span>تيك توك</a>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-sec fu d3" id="contact">
+  <div class="contact-box">
+    <h2>✉️ تواصل معنا</h2>
+    <p class="sub2">هل لديك اقتراح أو استفسار؟ نسعد بسماعك! 💬</p>
+    <div class="form-group">
+      <label>الاسم</label>
+      <input type="text" id="fname" placeholder="اكتب اسمك هنا..."/>
+    </div>
+    <div class="form-group">
+      <label>البريد الإلكتروني</label>
+      <input type="email" id="femail" placeholder="example@email.com"/>
+    </div>
+    <div class="form-group">
+      <label>الموضوع</label>
+      <select id="fsubject">
+        <option value="">— اختر الموضوع —</option>
+        <option>اقتراح محتوى جديد</option>
+        <option>تعاون أو شراكة</option>
+        <option>مشكلة تقنية</option>
+        <option>أخرى</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>الرسالة</label>
+      <textarea id="fmsg" placeholder="اكتب رسالتك هنا..."></textarea>
+    </div>
+    <button class="send-btn" onclick="sendMsg()">✉️ إرسال الرسالة</button>
+    <div class="success-msg" id="successMsg">🎉 شكراً! وصلتنا رسالتك وسنردّ عليك قريباً 💚</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fl-logo">🌍 عالم واحد</div>
+  <div class="fl-links">
+    <a href="#nasheeds">أناشيد</a><a href="#stories">قصص</a>
+    <a href="#games">ألعاب</a><a href="#cartoons">رسوم</a>
+    <a href="#quran">القرآن</a><a href="#contact">تواصل</a>
+  </div>
+  <p class="fl-copy">© 2025 عالم واحد · جميع الحقوق محفوظة · صُنع بـ ❤️ للأطفال</p>
+</footer>
+
+<script>
+// ===== COUNTERS =====
+function animateCount(el, target, suffix='') {
+  let cur = 0;
+  const step = Math.ceil(target / 60);
+  const timer = setInterval(() => {
+    cur = Math.min(cur + step, target);
+    el.textContent = cur.toLocaleString('ar') + suffix;
+    if (cur >= target) clearInterval(timer);
+  }, 30);
+}
+window.addEventListener('load', () => {
+  animateCount(document.getElementById('cnt1'), 12500, '');
+  animateCount(document.getElementById('cnt2'), 8300, '');
+  animateCount(document.getElementById('cnt3'), 5600, '');
+  animateCount(document.getElementById('cnt4'), 9100, '');
+});
+
+// ===== MASCOT BUBBLE =====
+let bubbleVisible = false;
+function toggleBubble() {
+  bubbleVisible = !bubbleVisible;
+  const b = document.getElementById('mascotBubble');
+  b.classList.toggle('show', bubbleVisible);
+  if (bubbleVisible) setTimeout(() => { bubbleVisible=false; b.classList.remove('show'); }, 4000);
+}
+setTimeout(() => { bubbleVisible=true; document.getElementById('mascotBubble').classList.add('show'); setTimeout(()=>{bubbleVisible=false;document.getElementById('mascotBubble').classList.remove('show');},4000); }, 2000);
+
+// ===== MUSIC (Web Audio API - ney flute gentle melody) =====
+let audioCtx = null, musicPlaying = false;
+const btn = document.getElementById('musicBtn');
+
+// Arabic maqam Rast scale - sounds like ney flute
+const melody = [
+  {f:264, d:1.2}, {f:297, d:0.6}, {f:330, d:0.9}, {f:352, d:1.4},
+  {f:396, d:0.8}, {f:440, d:1.2}, {f:495, d:0.6}, {f:528, d:1.8},
+  {f:495, d:0.6}, {f:440, d:1.0}, {f:396, d:1.2}, {f:352, d:0.8},
+  {f:330, d:1.4}, {f:297, d:0.6}, {f:264, d:2.0}
+];
+let noteIdx = 0, noteTimer = null;
+
+function createNeyNote(freq, duration, ctx, masterGain) {
+  const t = ctx.currentTime;
+
+  // Ney = breathy sine + slight noise + harmonics
+  const osc1 = ctx.createOscillator(); // fundamental
+  const osc2 = ctx.createOscillator(); // 2nd harmonic (softer)
+  const osc3 = ctx.createOscillator(); // 3rd harmonic (very soft)
+  const noise = ctx.createOscillator(); // breath shimmer
+  const bufferSize = ctx.sampleRate * 0.5;
+  
+  // Gentle vibrato via LFO
+  const lfo = ctx.createOscillator();
+  const lfoGain = ctx.createGain();
+  lfo.frequency.value = 5.5;
+  lfoGain.gain.value = 3;
+  lfo.connect(lfoGain);
+  lfoGain.connect(osc1.frequency);
+
+  osc1.type = 'sine'; osc1.frequency.value = freq;
+  osc2.type = 'sine'; osc2.frequency.value = freq * 2;
+  osc3.type = 'triangle'; osc3.frequency.value = freq * 3;
+  noise.type = 'sawtooth'; noise.frequency.value = freq * 0.98;
+
+  const g1 = ctx.createGain(); g1.gain.value = 0.22;
+  const g2 = ctx.createGain(); g2.gain.value = 0.07;
+  const g3 = ctx.createGain(); g3.gain.value = 0.03;
+  const gn = ctx.createGain(); gn.gain.value = 0.015;
+
+  const filter = ctx.createBiquadFilter();
+  filter.type = 'bandpass';
+  filter.frequency.value = freq * 1.8;
+  filter.Q.value = 2.5;
+
+  const env = ctx.createGain();
+  // Ney envelope: soft attack, sustain, gentle release
+  env.gain.setValueAtTime(0, t);
+  env.gain.linearRampToValueAtTime(1, t + 0.12); // soft attack
+  env.gain.setValueAtTime(1, t + duration * 0.7);
+  env.gain.linearRampToValueAtTime(0, t + duration); // gentle release
+
+  osc1.connect(g1); osc2.connect(g2); osc3.connect(g3); noise.connect(gn);
+  noise.connect(filter);
+  g1.connect(env); g2.connect(env); g3.connect(env);
+  gn.connect(env); filter.connect(env);
+  env.connect(masterGain);
+
+  [osc1, osc2, osc3, noise, lfo].forEach(o => { o.start(t); o.stop(t + duration + 0.1); });
+}
+
+function startMusic() {
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0.28; // gentle volume
+  const reverb = audioCtx.createConvolver();
+  masterGain.connect(audioCtx.destination);
+
+  function playNext() {
+    if (!musicPlaying) return;
+    const note = melody[noteIdx % melody.length];
+    createNeyNote(note.f, note.d, audioCtx, masterGain);
+    noteIdx++;
+    noteTimer = setTimeout(playNext, note.d * 1000 + 120);
+  }
+  playNext();
+}
+
+function stopMusic() {
+  if (noteTimer) clearTimeout(noteTimer);
+  if (audioCtx) { audioCtx.close(); audioCtx = null; }
+}
+
+btn.addEventListener('click', () => {
+  musicPlaying = !musicPlaying;
+  if (musicPlaying) {
+    startMusic();
+    btn.textContent = '🔊';
+    btn.classList.add('playing');
+  } else {
+    stopMusic();
+    btn.textContent = '🎵';
+    btn.classList.remove('playing');
+  }
+});
+
+// ===== CONTACT FORM =====
+function sendMsg() {
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const msg = document.getElementById('fmsg').value.trim();
+  if (!name || !email || !msg) {
+    alert('⚠️ يرجى ملء جميع الحقول المطلوبة');
+    return;
+  }
+  document.getElementById('successMsg').style.display = 'block';
+  document.getElementById('fname').value = '';
+  document.getElementById('femail').value = '';
+  document.getElementById('fmsg').value = '';
+  document.getElementById('fsubject').selectedIndex = 0;
+  setTimeout(() => { document.getElementById('successMsg').style.display = 'none'; }, 5000);
+}
+</script>
+</body>
+</html>
